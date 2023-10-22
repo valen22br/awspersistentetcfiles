@@ -1,0 +1,637 @@
+{
+ "Resources": {
+  "PersistantEtcFilesVpc56934F7E": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "PersistantEtcFilesStack/PersistantEtcFilesVpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistantEtcFilesVpc/Resource"
+   }
+  },
+  "PersistantEtcFilesVpcPublicSubnet1Subnet4CF98760": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-1a",
+    "CidrBlock": "10.0.0.0/17",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "PersistantEtcFilesVpc56934F7E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1/Subnet"
+   }
+  },
+  "PersistantEtcFilesVpcPublicSubnet1RouteTableC278DBE8": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "PersistantEtcFilesVpc56934F7E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1/RouteTable"
+   }
+  },
+  "PersistantEtcFilesVpcPublicSubnet1RouteTableAssociationAEFB52DE": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "PersistantEtcFilesVpcPublicSubnet1RouteTableC278DBE8"
+    },
+    "SubnetId": {
+     "Ref": "PersistantEtcFilesVpcPublicSubnet1Subnet4CF98760"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1/RouteTableAssociation"
+   }
+  },
+  "PersistantEtcFilesVpcPublicSubnet1DefaultRoute01BF2AB8": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "PersistantEtcFilesVpcIGW96B8C06E"
+    },
+    "RouteTableId": {
+     "Ref": "PersistantEtcFilesVpcPublicSubnet1RouteTableC278DBE8"
+    }
+   },
+   "DependsOn": [
+    "PersistantEtcFilesVpcVPCGW078530DA"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1/DefaultRoute"
+   }
+  },
+  "PersistantEtcFilesVpcPublicSubnet1EIP18A01BED": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1/EIP"
+   }
+  },
+  "PersistantEtcFilesVpcPublicSubnet1NATGateway1A24819B": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "PersistantEtcFilesVpcPublicSubnet1EIP18A01BED",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "PersistantEtcFilesVpcPublicSubnet1Subnet4CF98760"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1"
+     }
+    ]
+   },
+   "DependsOn": [
+    "PersistantEtcFilesVpcPublicSubnet1DefaultRoute01BF2AB8",
+    "PersistantEtcFilesVpcPublicSubnet1RouteTableAssociationAEFB52DE"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1/NATGateway"
+   }
+  },
+  "PersistantEtcFilesVpcPrivateSubnet1Subnet32602023": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-1a",
+    "CidrBlock": "10.0.128.0/17",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "PersistantEtcFilesVpc56934F7E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PrivateSubnet1/Subnet"
+   }
+  },
+  "PersistantEtcFilesVpcPrivateSubnet1RouteTableB6995E61": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "PersistantEtcFilesVpc56934F7E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PrivateSubnet1/RouteTable"
+   }
+  },
+  "PersistantEtcFilesVpcPrivateSubnet1RouteTableAssociation7B986C6E": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "PersistantEtcFilesVpcPrivateSubnet1RouteTableB6995E61"
+    },
+    "SubnetId": {
+     "Ref": "PersistantEtcFilesVpcPrivateSubnet1Subnet32602023"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PrivateSubnet1/RouteTableAssociation"
+   }
+  },
+  "PersistantEtcFilesVpcPrivateSubnet1DefaultRoute32688FAF": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "PersistantEtcFilesVpcPublicSubnet1NATGateway1A24819B"
+    },
+    "RouteTableId": {
+     "Ref": "PersistantEtcFilesVpcPrivateSubnet1RouteTableB6995E61"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistantEtcFilesVpc/PrivateSubnet1/DefaultRoute"
+   }
+  },
+  "PersistantEtcFilesVpcIGW96B8C06E": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "PersistantEtcFilesStack/PersistantEtcFilesVpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistantEtcFilesVpc/IGW"
+   }
+  },
+  "PersistantEtcFilesVpcVPCGW078530DA": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "PersistantEtcFilesVpcIGW96B8C06E"
+    },
+    "VpcId": {
+     "Ref": "PersistantEtcFilesVpc56934F7E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistantEtcFilesVpc/VPCGW"
+   }
+  },
+  "PersistantEtcFilesVpcRestrictDefaultSecurityGroupCustomResource9FA45329": {
+   "Type": "Custom::VpcRestrictDefaultSG",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+      "Arn"
+     ]
+    },
+    "DefaultSecurityGroupId": {
+     "Fn::GetAtt": [
+      "PersistantEtcFilesVpc56934F7E",
+      "DefaultSecurityGroup"
+     ]
+    },
+    "Account": "967632644417"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistantEtcFilesVpc/RestrictDefaultSecurityGroupCustomResource/Default"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ],
+    "Policies": [
+     {
+      "PolicyName": "Inline",
+      "PolicyDocument": {
+       "Version": "2012-10-17",
+       "Statement": [
+        {
+         "Effect": "Allow",
+         "Action": [
+          "ec2:AuthorizeSecurityGroupIngress",
+          "ec2:AuthorizeSecurityGroupEgress",
+          "ec2:RevokeSecurityGroupIngress",
+          "ec2:RevokeSecurityGroupEgress"
+         ],
+         "Resource": [
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:aws:ec2:us-east-1:967632644417:security-group/",
+             {
+              "Fn::GetAtt": [
+               "PersistantEtcFilesVpc56934F7E",
+               "DefaultSecurityGroup"
+              ]
+             }
+            ]
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-967632644417-us-east-1",
+     "S3Key": "7f18a11296f35510ee16538afec983ed6312e12afbf81b777089a9f8e34e2474.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "__entrypoint__.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs18.x",
+    "Description": "Lambda function for removing all inbound/outbound rules from the VPC default security group"
+   },
+   "DependsOn": [
+    "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.7f18a11296f35510ee16538afec983ed6312e12afbf81b777089a9f8e34e2474",
+    "aws:asset:property": "Code"
+   }
+  },
+  "EfsFileSystem37910666": {
+   "Type": "AWS::EFS::FileSystem",
+   "Properties": {
+    "Encrypted": true,
+    "FileSystemPolicy": {
+     "Statement": [
+      {
+       "Action": [
+        "elasticfilesystem:ClientRootAccess",
+        "elasticfilesystem:ClientWrite"
+       ],
+       "Condition": {
+        "Bool": {
+         "elasticfilesystem:AccessedViaMountTarget": "true"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": "*"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "FileSystemTags": [
+     {
+      "Key": "Name",
+      "Value": "PersistantEtcFilesStack/EfsFileSystem"
+     }
+    ],
+    "LifecyclePolicies": [
+     {
+      "TransitionToIA": "AFTER_14_DAYS"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/EfsFileSystem/Resource"
+   }
+  },
+  "EfsFileSystemEfsSecurityGroup68CC9E7F": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "PersistantEtcFilesStack/EfsFileSystem/EfsSecurityGroup",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "PersistantEtcFilesStack/EfsFileSystem"
+     }
+    ],
+    "VpcId": {
+     "Ref": "PersistantEtcFilesVpc56934F7E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/EfsFileSystem/EfsSecurityGroup/Resource"
+   }
+  },
+  "EfsFileSystemEfsMountTargetPrivateSubnet120237FA6": {
+   "Type": "AWS::EFS::MountTarget",
+   "Properties": {
+    "FileSystemId": {
+     "Ref": "EfsFileSystem37910666"
+    },
+    "SecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "EfsFileSystemEfsSecurityGroup68CC9E7F",
+       "GroupId"
+      ]
+     }
+    ],
+    "SubnetId": {
+     "Ref": "PersistantEtcFilesVpcPrivateSubnet1Subnet32602023"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/EfsFileSystem/EfsMountTarget-PrivateSubnet1"
+   }
+  },
+  "SecurityGroupDD263621": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "PersistantEtcFilesStack/SecurityGroup",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "SSH",
+      "FromPort": 22,
+      "IpProtocol": "tcp",
+      "ToPort": 22
+     }
+    ],
+    "VpcId": {
+     "Ref": "PersistantEtcFilesVpc56934F7E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/SecurityGroup/Resource"
+   }
+  },
+  "PersistEtcFilesnstanceInstanceRole95081D47": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ec2.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonSSMManagedInstanceCore"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonElasticFileSystemClientFullAccess"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "PersistantEtcFilesStack/PersistEtcFilesnstance"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistEtcFilesnstance/InstanceRole/Resource"
+   }
+  },
+  "PersistEtcFilesnstanceInstanceProfile1EFFFE1B": {
+   "Type": "AWS::IAM::InstanceProfile",
+   "Properties": {
+    "Roles": [
+     {
+      "Ref": "PersistEtcFilesnstanceInstanceRole95081D47"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistEtcFilesnstance/InstanceProfile"
+   }
+  },
+  "PersistEtcFilesnstance6DECEDFE": {
+   "Type": "AWS::EC2::Instance",
+   "Properties": {
+    "AvailabilityZone": "us-east-1a",
+    "IamInstanceProfile": {
+     "Ref": "PersistEtcFilesnstanceInstanceProfile1EFFFE1B"
+    },
+    "ImageId": {
+     "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestal2023amikernel61x8664C96584B6F00A464EAD1953AFF4B05118Parameter"
+    },
+    "InstanceType": "t3a.micro",
+    "SecurityGroupIds": [
+     {
+      "Fn::GetAtt": [
+       "SecurityGroupDD263621",
+       "GroupId"
+      ]
+     }
+    ],
+    "SubnetId": {
+     "Ref": "PersistantEtcFilesVpcPrivateSubnet1Subnet32602023"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "PersistantEtcFilesStack/PersistEtcFilesnstance"
+     }
+    ],
+    "UserData": {
+     "Fn::Base64": {
+      "Fn::Join": [
+       "",
+       [
+        "#!/bin/bash\nyum update -y\nyum install -y nfs-utils\nyum install -y amazon-efs-utils\nyum install -y aws-ssm-agent\nsystemctl start amazon-ssm-agent\nsystemctl enable amazon-ssm-agent\nyum install -y cronie\nsystemctl enable crond\nsystemctl start crond\necho \"Mounting EFS filesystem...\"\nmkdir -p /mnt/efs\necho \"",
+        {
+         "Ref": "EfsFileSystem37910666"
+        },
+        ".efs.",
+        {
+         "Ref": "AWS::Region"
+        },
+        ".amazonaws.com:/ /mnt/efs nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0\" | tee -a /etc/fstab\necho sleep 30\nsleep 30\necho mount -a command...\nsudo mount -a\necho sleep 30\nsleep 30\necho continuing...\necho \"/mnt/efs *(rw,async,no_root_squash)\" >> /etc/exports\nexportfs -a\nsystemctl start nfs-server\nsystemctl enable nfs-server\nmkdir -p /mnt/efs/etc\necho \"Copying /etc files from NFS share...\"\ncp /mnt/efs/etc/passwd /etc/passwd 2>/dev/null || echo \"No /etc/passwd file found on NFS share or copy failed\"\ncp /mnt/efs/etc/group /etc/group 2>/dev/null || echo \"No /etc/group file found on NFS share or copy failed\"\ncp /mnt/efs/etc/shadow /etc/shadow 2>/dev/null || echo \"No /etc/shadow file found on NFS share or copy failed\"\necho \"Files in /etc copied successfully!\"\necho \"0 * * * * root cp -r /etc/passwd /mnt/efs/etc/passwd\" >> /etc/crontab\necho \"0 * * * * root cp -r /etc/group /mnt/efs/etc/group\" >> /etc/crontab\necho \"0 * * * * root cp -r /etc/shadow /mnt/efs/etc/shadow\" >> /etc/crontab\nsystemctl restart crond"
+       ]
+      ]
+     }
+    }
+   },
+   "DependsOn": [
+    "PersistEtcFilesnstanceInstanceRole95081D47"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/PersistEtcFilesnstance/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21QwW6DMAz9lt5DtvbS7VhVW8VhUwRVr1MIhrolSZU4VAjx7wtjDFXa6T0/2y8v3vDXLX9eybtPVHlNGix4n5NUVxalrx7Uhvenm2L7ypzEnolQNKjyUBigUVtYZgPBURYNLPqi7by3CiWhNX/DI3lLxQifkg6S4C47Jhy2kS7GqSFwkc8DU5Lfakcx61mDIZaDCg6pOzgbbj8ZHoTUeJJGwWQ58YFB5Xn/jg3knSfQY/Ox+rDB0FG6GmhgKDXvMzt9ccbZTDhbxdVhYBl4G9z4VPBk9VLGpf9bcbfFEhyLdwKK96/R1OO8kE5qiAcYmLEl8It/atcvfL3l69XFIyYuxkMNPJvwG9ZV6vjPAQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Parameters": {
+  "SsmParameterValueawsserviceamiamazonlinuxlatestal2023amikernel61x8664C96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+   "Default": "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64"
+  },
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

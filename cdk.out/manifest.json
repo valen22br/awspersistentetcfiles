@@ -1,0 +1,239 @@
+{
+  "version": "34.0.0",
+  "artifacts": {
+    "PersistantEtcFilesStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "PersistantEtcFilesStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "PersistantEtcFilesStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://967632644417/us-east-1",
+      "properties": {
+        "templateFile": "PersistantEtcFilesStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::967632644417:role/cdk-hnb659fds-deploy-role-967632644417-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::967632644417:role/cdk-hnb659fds-cfn-exec-role-967632644417-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-967632644417-us-east-1/22fda375a32afa9b7f577d712930e278ff089540f134cf3e0b6500231a3eb62f.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "PersistantEtcFilesStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::967632644417:role/cdk-hnb659fds-lookup-role-967632644417-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "PersistantEtcFilesStack.assets"
+      ],
+      "metadata": {
+        "/PersistantEtcFilesStack/PersistantEtcFilesVpc/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistantEtcFilesVpc56934F7E"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistantEtcFilesVpcPublicSubnet1Subnet4CF98760"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistantEtcFilesVpcPublicSubnet1RouteTableC278DBE8"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistantEtcFilesVpcPublicSubnet1RouteTableAssociationAEFB52DE"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistantEtcFilesVpcPublicSubnet1DefaultRoute01BF2AB8"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1/EIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistantEtcFilesVpcPublicSubnet1EIP18A01BED"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistantEtcFilesVpc/PublicSubnet1/NATGateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistantEtcFilesVpcPublicSubnet1NATGateway1A24819B"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistantEtcFilesVpc/PrivateSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistantEtcFilesVpcPrivateSubnet1Subnet32602023"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistantEtcFilesVpc/PrivateSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistantEtcFilesVpcPrivateSubnet1RouteTableB6995E61"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistantEtcFilesVpc/PrivateSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistantEtcFilesVpcPrivateSubnet1RouteTableAssociation7B986C6E"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistantEtcFilesVpc/PrivateSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistantEtcFilesVpcPrivateSubnet1DefaultRoute32688FAF"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistantEtcFilesVpc/IGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistantEtcFilesVpcIGW96B8C06E"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistantEtcFilesVpc/VPCGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistantEtcFilesVpcVPCGW078530DA"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistantEtcFilesVpc/RestrictDefaultSecurityGroupCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistantEtcFilesVpcRestrictDefaultSecurityGroupCustomResource9FA45329"
+          }
+        ],
+        "/PersistantEtcFilesStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0"
+          }
+        ],
+        "/PersistantEtcFilesStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E"
+          }
+        ],
+        "/PersistantEtcFilesStack/EfsFileSystem/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EfsFileSystem37910666"
+          }
+        ],
+        "/PersistantEtcFilesStack/EfsFileSystem/EfsSecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EfsFileSystemEfsSecurityGroup68CC9E7F"
+          }
+        ],
+        "/PersistantEtcFilesStack/EfsFileSystem/EfsMountTarget-PrivateSubnet1": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EfsFileSystemEfsMountTargetPrivateSubnet120237FA6"
+          }
+        ],
+        "/PersistantEtcFilesStack/SecurityGroup": [
+          {
+            "type": "aws:cdk:warning",
+            "data": "Ignoring Egress rule since 'allowAllOutbound' is set to true; To add customized rules, set allowAllOutbound=false on the SecurityGroup [ack: @aws-cdk/aws-ec2:ipv4IgnoreEgressRule]",
+            "trace": [
+              "Annotations.addMessage (/Users/lgustavo/programs/persistant-etc-files/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1392)",
+              "Annotations.addWarningV2 (/Users/lgustavo/programs/persistant-etc-files/node_modules/aws-cdk-lib/core/lib/annotations.js:1:699)",
+              "SecurityGroup.addEgressRule (/Users/lgustavo/programs/persistant-etc-files/node_modules/aws-cdk-lib/aws-ec2/lib/security-group.js:1:7237)",
+              "new PersistantEtcFilesStack (/Users/lgustavo/programs/persistant-etc-files/lib/persistant-etc-files-stack.ts:31:19)",
+              "Object.<anonymous> (/Users/lgustavo/programs/persistant-etc-files/bin/persistant-etc-files.ts:11:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1256:14)",
+              "Module.m._compile (/Users/lgustavo/programs/persistant-etc-files/node_modules/ts-node/src/index.ts:1618:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1310:10)",
+              "Object.require.extensions.<computed> [as .ts] (/Users/lgustavo/programs/persistant-etc-files/node_modules/ts-node/src/index.ts:1621:12)",
+              "Module.load (node:internal/modules/cjs/loader:1119:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:960:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)",
+              "phase4 (/Users/lgustavo/programs/persistant-etc-files/node_modules/ts-node/src/bin.ts:649:14)",
+              "bootstrap (/Users/lgustavo/programs/persistant-etc-files/node_modules/ts-node/src/bin.ts:95:10)",
+              "main (/Users/lgustavo/programs/persistant-etc-files/node_modules/ts-node/src/bin.ts:55:10)",
+              "Object.<anonymous> (/Users/lgustavo/programs/persistant-etc-files/node_modules/ts-node/src/bin.ts:800:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1256:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1310:10)",
+              "Module.load (node:internal/modules/cjs/loader:1119:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:960:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)",
+              "node:internal/main/run_main_module:23:47"
+            ]
+          }
+        ],
+        "/PersistantEtcFilesStack/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SecurityGroupDD263621"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistEtcFilesnstance/InstanceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistEtcFilesnstanceInstanceRole95081D47"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistEtcFilesnstance/InstanceProfile": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistEtcFilesnstanceInstanceProfile1EFFFE1B"
+          }
+        ],
+        "/PersistantEtcFilesStack/PersistEtcFilesnstance/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PersistEtcFilesnstance6DECEDFE"
+          }
+        ],
+        "/PersistantEtcFilesStack/SsmParameterValue:--aws--service--ami-amazon-linux-latest--al2023-ami-kernel-6.1-x86_64:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SsmParameterValueawsserviceamiamazonlinuxlatestal2023amikernel61x8664C96584B6F00A464EAD1953AFF4B05118Parameter"
+          }
+        ],
+        "/PersistantEtcFilesStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/PersistantEtcFilesStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/PersistantEtcFilesStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "PersistantEtcFilesStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
