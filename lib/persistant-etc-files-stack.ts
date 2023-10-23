@@ -14,13 +14,6 @@ export class PersistantEtcFilesStack extends cdk.Stack {
       maxAzs: 1, // Adjust as needed
     });
 
-    // Create an EFS file system
-    const efsFileSystem = new efs.FileSystem(this, 'EfsFileSystem', {
-      vpc,
-      lifecyclePolicy: efs.LifecyclePolicy.AFTER_14_DAYS, // Adjust as needed
-    });
-
-
     // Create a security group for EC2
     const securityGroup = new ec2.SecurityGroup(this, 'SecurityGroup', {
       vpc,
@@ -28,8 +21,20 @@ export class PersistantEtcFilesStack extends cdk.Stack {
 
     // Allow necessary inbound traffic to EC2
     securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22), 'SSH');
+    securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(2049), 'NFS');
     securityGroup.addEgressRule(ec2.Peer.anyIpv4(), ec2.Port.allTraffic(), 'Allow all outbound traffic');
+    securityGroup.addEgressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(2049), 'NFS');
     // Add additional inbound rules as needed
+
+    // Create an EFS file system
+    const efsFileSystem = new efs.FileSystem(this, 'EfsFileSystem', {
+      vpc,
+      lifecyclePolicy: efs.LifecyclePolicy.AFTER_14_DAYS, // Adjust as needed
+      vpcSubnets: {
+        subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS, // Choose the appropriate subnet type
+      },
+      securityGroup: securityGroup,
+    });
 
     // EC2 user data script
     const userData = ec2.UserData.forLinux({
@@ -104,6 +109,20 @@ export class PersistantEtcFilesStack extends cdk.Stack {
 
     // Set the instance profile for the EC2 instance
     instance.role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonElasticFileSystemClientFullAccess')); // Add the necessary policy
+
+    // Create an IAM policy for EFS
+    const efsPolicy = new iam.Policy(this, 'EfsPolicy', {
+      statements: [
+        new iam.PolicyStatement({
+          effect: iam.Effect.ALLOW,
+          actions: ['elasticfilesystem:ClientMount'],
+          resources: [efsFileSystem.fileSystemArn],
+        }),
+      ]}
+    );
+
+    // Attach the policy to the EC2 instance role
+    efsPolicy.attachToRole(instance.role);
 
 
     // Output the instance's public IP address for SSH access

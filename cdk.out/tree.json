@@ -403,6 +403,56 @@
               "version": "2.97.0"
             }
           },
+          "SecurityGroup": {
+            "id": "SecurityGroup",
+            "path": "PersistantEtcFilesStack/SecurityGroup",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "PersistantEtcFilesStack/SecurityGroup/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                  "aws:cdk:cloudformation:props": {
+                    "groupDescription": "PersistantEtcFilesStack/SecurityGroup",
+                    "securityGroupEgress": [
+                      {
+                        "cidrIp": "0.0.0.0/0",
+                        "description": "Allow all outbound traffic by default",
+                        "ipProtocol": "-1"
+                      }
+                    ],
+                    "securityGroupIngress": [
+                      {
+                        "cidrIp": "0.0.0.0/0",
+                        "ipProtocol": "tcp",
+                        "fromPort": 22,
+                        "toPort": 22,
+                        "description": "SSH"
+                      },
+                      {
+                        "cidrIp": "0.0.0.0/0",
+                        "ipProtocol": "tcp",
+                        "fromPort": 2049,
+                        "toPort": 2049,
+                        "description": "NFS"
+                      }
+                    ],
+                    "vpcId": {
+                      "Ref": "PersistantEtcFilesVpc56934F7E"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.CfnSecurityGroup",
+                  "version": "2.97.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ec2.SecurityGroup",
+              "version": "2.97.0"
+            }
+          },
           "EfsFileSystem": {
             "id": "EfsFileSystem",
             "path": "PersistantEtcFilesStack/EfsFileSystem",
@@ -452,46 +502,6 @@
                   "version": "2.97.0"
                 }
               },
-              "EfsSecurityGroup": {
-                "id": "EfsSecurityGroup",
-                "path": "PersistantEtcFilesStack/EfsFileSystem/EfsSecurityGroup",
-                "children": {
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "PersistantEtcFilesStack/EfsFileSystem/EfsSecurityGroup/Resource",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
-                      "aws:cdk:cloudformation:props": {
-                        "groupDescription": "PersistantEtcFilesStack/EfsFileSystem/EfsSecurityGroup",
-                        "securityGroupEgress": [
-                          {
-                            "cidrIp": "0.0.0.0/0",
-                            "description": "Allow all outbound traffic by default",
-                            "ipProtocol": "-1"
-                          }
-                        ],
-                        "tags": [
-                          {
-                            "key": "Name",
-                            "value": "PersistantEtcFilesStack/EfsFileSystem"
-                          }
-                        ],
-                        "vpcId": {
-                          "Ref": "PersistantEtcFilesVpc56934F7E"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_ec2.CfnSecurityGroup",
-                      "version": "2.97.0"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_ec2.SecurityGroup",
-                  "version": "2.97.0"
-                }
-              },
               "EfsMountTarget-PrivateSubnet1": {
                 "id": "EfsMountTarget-PrivateSubnet1",
                 "path": "PersistantEtcFilesStack/EfsFileSystem/EfsMountTarget-PrivateSubnet1",
@@ -504,7 +514,7 @@
                     "securityGroups": [
                       {
                         "Fn::GetAtt": [
-                          "EfsFileSystemEfsSecurityGroup68CC9E7F",
+                          "SecurityGroupDD263621",
                           "GroupId"
                         ]
                       }
@@ -522,49 +532,6 @@
             },
             "constructInfo": {
               "fqn": "aws-cdk-lib.aws_efs.FileSystem",
-              "version": "2.97.0"
-            }
-          },
-          "SecurityGroup": {
-            "id": "SecurityGroup",
-            "path": "PersistantEtcFilesStack/SecurityGroup",
-            "children": {
-              "Resource": {
-                "id": "Resource",
-                "path": "PersistantEtcFilesStack/SecurityGroup/Resource",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
-                  "aws:cdk:cloudformation:props": {
-                    "groupDescription": "PersistantEtcFilesStack/SecurityGroup",
-                    "securityGroupEgress": [
-                      {
-                        "cidrIp": "0.0.0.0/0",
-                        "description": "Allow all outbound traffic by default",
-                        "ipProtocol": "-1"
-                      }
-                    ],
-                    "securityGroupIngress": [
-                      {
-                        "cidrIp": "0.0.0.0/0",
-                        "ipProtocol": "tcp",
-                        "fromPort": 22,
-                        "toPort": 22,
-                        "description": "SSH"
-                      }
-                    ],
-                    "vpcId": {
-                      "Ref": "PersistantEtcFilesVpc56934F7E"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_ec2.CfnSecurityGroup",
-                  "version": "2.97.0"
-                }
-              }
-            },
-            "constructInfo": {
-              "fqn": "aws-cdk-lib.aws_ec2.SecurityGroup",
               "version": "2.97.0"
             }
           },
@@ -740,6 +707,50 @@
             "path": "PersistantEtcFilesStack/SsmParameterValue:--aws--service--ami-amazon-linux-latest--al2023-ami-kernel-6.1-x86_64:C96584B6-F00A-464E-AD19-53AFF4B05118",
             "constructInfo": {
               "fqn": "aws-cdk-lib.Resource",
+              "version": "2.97.0"
+            }
+          },
+          "EfsPolicy": {
+            "id": "EfsPolicy",
+            "path": "PersistantEtcFilesStack/EfsPolicy",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "PersistantEtcFilesStack/EfsPolicy/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                  "aws:cdk:cloudformation:props": {
+                    "policyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "elasticfilesystem:ClientMount",
+                          "Effect": "Allow",
+                          "Resource": {
+                            "Fn::GetAtt": [
+                              "EfsFileSystem37910666",
+                              "Arn"
+                            ]
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "policyName": "EfsPolicyFFE671C9",
+                    "roles": [
+                      {
+                        "Ref": "PersistEtcFilesnstanceInstanceRole95081D47"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                  "version": "2.97.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Policy",
               "version": "2.97.0"
             }
           },

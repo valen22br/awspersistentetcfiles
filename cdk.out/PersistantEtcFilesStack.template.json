@@ -350,6 +350,41 @@
     "aws:asset:property": "Code"
    }
   },
+  "SecurityGroupDD263621": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "PersistantEtcFilesStack/SecurityGroup",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "SSH",
+      "FromPort": 22,
+      "IpProtocol": "tcp",
+      "ToPort": 22
+     },
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "NFS",
+      "FromPort": 2049,
+      "IpProtocol": "tcp",
+      "ToPort": 2049
+     }
+    ],
+    "VpcId": {
+     "Ref": "PersistantEtcFilesVpc56934F7E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/SecurityGroup/Resource"
+   }
+  },
   "EfsFileSystem37910666": {
    "Type": "AWS::EFS::FileSystem",
    "Properties": {
@@ -392,31 +427,6 @@
     "aws:cdk:path": "PersistantEtcFilesStack/EfsFileSystem/Resource"
    }
   },
-  "EfsFileSystemEfsSecurityGroup68CC9E7F": {
-   "Type": "AWS::EC2::SecurityGroup",
-   "Properties": {
-    "GroupDescription": "PersistantEtcFilesStack/EfsFileSystem/EfsSecurityGroup",
-    "SecurityGroupEgress": [
-     {
-      "CidrIp": "0.0.0.0/0",
-      "Description": "Allow all outbound traffic by default",
-      "IpProtocol": "-1"
-     }
-    ],
-    "Tags": [
-     {
-      "Key": "Name",
-      "Value": "PersistantEtcFilesStack/EfsFileSystem"
-     }
-    ],
-    "VpcId": {
-     "Ref": "PersistantEtcFilesVpc56934F7E"
-    }
-   },
-   "Metadata": {
-    "aws:cdk:path": "PersistantEtcFilesStack/EfsFileSystem/EfsSecurityGroup/Resource"
-   }
-  },
   "EfsFileSystemEfsMountTargetPrivateSubnet120237FA6": {
    "Type": "AWS::EFS::MountTarget",
    "Properties": {
@@ -426,7 +436,7 @@
     "SecurityGroups": [
      {
       "Fn::GetAtt": [
-       "EfsFileSystemEfsSecurityGroup68CC9E7F",
+       "SecurityGroupDD263621",
        "GroupId"
       ]
      }
@@ -437,34 +447,6 @@
    },
    "Metadata": {
     "aws:cdk:path": "PersistantEtcFilesStack/EfsFileSystem/EfsMountTarget-PrivateSubnet1"
-   }
-  },
-  "SecurityGroupDD263621": {
-   "Type": "AWS::EC2::SecurityGroup",
-   "Properties": {
-    "GroupDescription": "PersistantEtcFilesStack/SecurityGroup",
-    "SecurityGroupEgress": [
-     {
-      "CidrIp": "0.0.0.0/0",
-      "Description": "Allow all outbound traffic by default",
-      "IpProtocol": "-1"
-     }
-    ],
-    "SecurityGroupIngress": [
-     {
-      "CidrIp": "0.0.0.0/0",
-      "Description": "SSH",
-      "FromPort": 22,
-      "IpProtocol": "tcp",
-      "ToPort": 22
-     }
-    ],
-    "VpcId": {
-     "Ref": "PersistantEtcFilesVpc56934F7E"
-    }
-   },
-   "Metadata": {
-    "aws:cdk:path": "PersistantEtcFilesStack/SecurityGroup/Resource"
    }
   },
   "PersistEtcFilesnstanceInstanceRole95081D47": {
@@ -586,10 +568,39 @@
     "aws:cdk:path": "PersistantEtcFilesStack/PersistEtcFilesnstance/Resource"
    }
   },
+  "EfsPolicyFFE671C9": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "elasticfilesystem:ClientMount",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "EfsFileSystem37910666",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "EfsPolicyFFE671C9",
+    "Roles": [
+     {
+      "Ref": "PersistEtcFilesnstanceInstanceRole95081D47"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "PersistantEtcFilesStack/EfsPolicy/Resource"
+   }
+  },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21QwW6DMAz9lt5DtvbS7VhVW8VhUwRVr1MIhrolSZU4VAjx7wtjDFXa6T0/2y8v3vDXLX9eybtPVHlNGix4n5NUVxalrx7Uhvenm2L7ypzEnolQNKjyUBigUVtYZgPBURYNLPqi7by3CiWhNX/DI3lLxQifkg6S4C47Jhy2kS7GqSFwkc8DU5Lfakcx61mDIZaDCg6pOzgbbj8ZHoTUeJJGwWQ58YFB5Xn/jg3knSfQY/Ox+rDB0FG6GmhgKDXvMzt9ccbZTDhbxdVhYBl4G9z4VPBk9VLGpf9bcbfFEhyLdwKK96/R1OO8kE5qiAcYmLEl8It/atcvfL3l69XFIyYuxkMNPJvwG9ZV6vjPAQAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21RQW6DMBB8S+7GLbmkPUZRG3FohSDKtTJmoZtgO7LXRAjx9xooRZF62tnZ9Xg83vLXHX/eiLuLZHmNGix4n5OQVxaorx7klvfnm2SHSp/TA0t90aDMfaGBRm5FmfEEJ1E0sPIrt3fOSBSERv8tj+AtScfyKegoCO6iY6nFNsBVONEENuBlYXby2+0peP1WoInlIL1F6o7W+Nvk4YFItCOhJcySMx4YVI7379hA3jkCNQ4fuw/jNZ2ErYEGhkLxPjPzE5e6iKXWVOEoS01IaLI5o2FgGTjj7Xi3d2TU2gaV/0dBrMUSLAvBAYUPqVHXk6awQkFIZGDalMAv7qmNX3i84/Hm4hAjG/yiAp7N9QeEbDPL4AEAAA=="
    },
    "Metadata": {
     "aws:cdk:path": "PersistantEtcFilesStack/CDKMetadata/Default"
