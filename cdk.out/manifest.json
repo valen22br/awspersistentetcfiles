@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::967632644417:role/cdk-hnb659fds-deploy-role-967632644417-us-east-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::967632644417:role/cdk-hnb659fds-cfn-exec-role-967632644417-us-east-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-967632644417-us-east-1/c1090ce278256b97775237855adb443b1867319e4467e460ca50a151ba0560c5.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-967632644417-us-east-1/a2348e96f912bd2b45bda1c19f5dab64ec03b2d39ca133c702ae92c76b36f0d5.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -200,12 +200,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "SsmParameterValueawsserviceamiamazonlinuxlatestal2023amikernel61x8664C96584B6F00A464EAD1953AFF4B05118Parameter"
-          }
-        ],
-        "/PersistantEtcFilesStack/EfsPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "EfsPolicyFFE671C9"
           }
         ],
         "/PersistantEtcFilesStack/CDKMetadata/Default": [

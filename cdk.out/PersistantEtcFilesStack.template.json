@@ -555,7 +555,7 @@
         {
          "Ref": "AWS::Region"
         },
-        ".amazonaws.com:/ /mnt/efs nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0\" | tee -a /etc/fstab\necho sleep 30\nsleep 30\necho mount -a command...\nsudo mount -a\necho sleep 30\nsleep 30\necho continuing...\necho \"/mnt/efs *(rw,async,no_root_squash)\" >> /etc/exports\nexportfs -a\nsystemctl start nfs-server\nsystemctl enable nfs-server\nmkdir -p /mnt/efs/etc\necho \"Copying /etc files from NFS share...\"\ncp /mnt/efs/etc/passwd /etc/passwd 2>/dev/null || echo \"No /etc/passwd file found on NFS share or copy failed\"\ncp /mnt/efs/etc/group /etc/group 2>/dev/null || echo \"No /etc/group file found on NFS share or copy failed\"\ncp /mnt/efs/etc/shadow /etc/shadow 2>/dev/null || echo \"No /etc/shadow file found on NFS share or copy failed\"\necho \"Files in /etc copied successfully!\"\necho \"0 * * * * root cp -r /etc/passwd /mnt/efs/etc/passwd\" >> /etc/crontab\necho \"0 * * * * root cp -r /etc/group /mnt/efs/etc/group\" >> /etc/crontab\necho \"0 * * * * root cp -r /etc/shadow /mnt/efs/etc/shadow\" >> /etc/crontab\nsystemctl restart crond"
+        ".amazonaws.com:/ /mnt/efs nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0\" | tee -a /etc/fstab\necho sleep 30\nsleep 30\necho mount -a command...\nsudo mount -a\necho sleep 30\nsleep 30\necho continuing...\necho \"/mnt/efs *(rw,async,no_root_squash)\" >> /etc/exports\nexportfs -a\nsystemctl start nfs-server\nsystemctl enable nfs-server\nmkdir -p /mnt/efs/etc\necho \"Copying /etc files from NFS share...\"\ncp /mnt/efs/etc/passwd /etc/passwd 2>/dev/null || echo \"No /etc/passwd file found on NFS share or copy failed\"\ncp /mnt/efs/etc/group /etc/group 2>/dev/null || echo \"No /etc/group file found on NFS share or copy failed\"\ncp /mnt/efs/etc/shadow /etc/shadow 2>/dev/null || echo \"No /etc/shadow file found on NFS share or copy failed\"\necho \"Files in /etc copied successfully!\"\necho \"Creating cron jobs ...\"\necho \"* * * * * root sudo cp -prv /etc/passwd /mnt/efs/etc/passwd\" >> /etc/crontab\necho \"* * * * * root sudo cp -prv /etc/group /mnt/efs/etc/group\" >> /etc/crontab\necho \"* * * * * root sudo cp -prv /etc/shadow /mnt/efs/etc/shadow\" >> /etc/crontab\nsystemctl restart crond"
        ]
       ]
      }
@@ -568,39 +568,10 @@
     "aws:cdk:path": "PersistantEtcFilesStack/PersistEtcFilesnstance/Resource"
    }
   },
-  "EfsPolicyFFE671C9": {
-   "Type": "AWS::IAM::Policy",
-   "Properties": {
-    "PolicyDocument": {
-     "Statement": [
-      {
-       "Action": "elasticfilesystem:ClientMount",
-       "Effect": "Allow",
-       "Resource": {
-        "Fn::GetAtt": [
-         "EfsFileSystem37910666",
-         "Arn"
-        ]
-       }
-      }
-     ],
-     "Version": "2012-10-17"
-    },
-    "PolicyName": "EfsPolicyFFE671C9",
-    "Roles": [
-     {
-      "Ref": "PersistEtcFilesnstanceInstanceRole95081D47"
-     }
-    ]
-   },
-   "Metadata": {
-    "aws:cdk:path": "PersistantEtcFilesStack/EfsPolicy/Resource"
-   }
-  },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21RQW6DMBB8S+7GLbmkPUZRG3FohSDKtTJmoZtgO7LXRAjx9xooRZF62tnZ9Xg83vLXHX/eiLuLZHmNGix4n5OQVxaorx7klvfnm2SHSp/TA0t90aDMfaGBRm5FmfEEJ1E0sPIrt3fOSBSERv8tj+AtScfyKegoCO6iY6nFNsBVONEENuBlYXby2+0peP1WoInlIL1F6o7W+Nvk4YFItCOhJcySMx4YVI7379hA3jkCNQ4fuw/jNZ2ErYEGhkLxPjPzE5e6iKXWVOEoS01IaLI5o2FgGTjj7Xi3d2TU2gaV/0dBrMUSLAvBAYUPqVHXk6awQkFIZGDalMAv7qmNX3i84/Hm4hAjG/yiAp7N9QeEbDPL4AEAAA=="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21QwW6DMAz9lt5DtvbS7VhVW8VhUwRVr1MIhrolSZU4VAjx7wtjDFXa6T0/2y8v3vDXLX9eybtPVHlNGix4n5NUVxalrx7Uhvenm2L7ypzEnolQNKjyUBigUVtYZgPBURYNLPqi7by3CiWhNX/DI3lLxQifkg6S4C47Jhy2kS7GqSFwkc8DU5Lfakcx61mDIZaDCg6pOzgbbj8ZHoTUeJJGwWQ58YFB5Xn/jg3knSfQY/Ox+rDB0FG6GmhgKDXvMzt9ccbZTDhbxdVhYBl4G9z4VPBk9VLGpf9bcbfFEhyLdwKK96/R1OO8kE5qiAcYmLEl8It/atcvfL3l69XFIyYuxkMNPJvwG9ZV6vjPAQAA"
    },
    "Metadata": {
     "aws:cdk:path": "PersistantEtcFilesStack/CDKMetadata/Default"

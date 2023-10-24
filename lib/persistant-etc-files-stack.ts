@@ -84,9 +84,10 @@ export class PersistantEtcFilesStack extends cdk.Stack {
       'echo "Files in /etc copied successfully!"',
 
       // Backup cron jobs
-      'echo "0 * * * * root cp -r /etc/passwd /mnt/efs/etc/passwd" >> /etc/crontab',
-      'echo "0 * * * * root cp -r /etc/group /mnt/efs/etc/group" >> /etc/crontab',
-      'echo "0 * * * * root cp -r /etc/shadow /mnt/efs/etc/shadow" >> /etc/crontab',
+      'echo "Creating cron jobs ..."',
+      'echo "* * * * * root sudo cp -prv /etc/passwd /mnt/efs/etc/passwd" >> /etc/crontab',
+      'echo "* * * * * root sudo cp -prv /etc/group /mnt/efs/etc/group" >> /etc/crontab',
+      'echo "* * * * * root sudo cp -prv /etc/shadow /mnt/efs/etc/shadow" >> /etc/crontab',
 
       // Restart the cron service to apply the changes
       'systemctl restart crond',
@@ -109,25 +110,5 @@ export class PersistantEtcFilesStack extends cdk.Stack {
 
     // Set the instance profile for the EC2 instance
     instance.role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonElasticFileSystemClientFullAccess')); // Add the necessary policy
-
-    // Create an IAM policy for EFS
-    const efsPolicy = new iam.Policy(this, 'EfsPolicy', {
-      statements: [
-        new iam.PolicyStatement({
-          effect: iam.Effect.ALLOW,
-          actions: ['elasticfilesystem:ClientMount'],
-          resources: [efsFileSystem.fileSystemArn],
-        }),
-      ]}
-    );
-
-    // Attach the policy to the EC2 instance role
-    efsPolicy.attachToRole(instance.role);
-
-
-    // Output the instance's public IP address for SSH access
-    // new cdk.CfnOutput(this, 'InstancePublicIp', {
-    //   value: instance.instancePublicIp,
-    // });
   }
 }
